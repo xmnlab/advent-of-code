@@ -6,9 +6,11 @@ from pathlib import Path
 
 import numpy as np
 
+from numpy.lib.stride_tricks import sliding_window_view
+
 
 regex = r"mul\([0-9]+,[0-9]+\)"
-SEARCH_KEY = "XMAS"
+SEARCH_KEY = "MAS"
 SEARCH_KEY_LEN = len(SEARCH_KEY)
 
 
@@ -27,75 +29,52 @@ def matrix_from_txt(data: list[str]) -> np.ndarray:
     return matrix
 
 
-def count_xmas_horizontally(matrix: np.ndarray) -> int:
+def count_x_mas_diagonally(kernel: np.ndarray) -> int:
     count = 0
-    for row in matrix:
-        text = "".join(row)
+    mirrored_kernel = kernel[:, ::-1]
+
+    kernel_list = [kernel, mirrored_kernel]
+    for m in kernel_list:
+        diag = np.diag(m)
+
+        text = "".join(diag)
         count += text.count(SEARCH_KEY)
         count += text[::-1].count(SEARCH_KEY)
     return count
 
 
-def count_xmas_vertically(matrix: np.ndarray) -> int:
+def count_x_mas_occurrences(matrix: np.ndarray):
+    # Kernel size
+    N = M = SEARCH_KEY_LEN
+
+    # Generate sliding windows
+    windows = sliding_window_view(matrix, (N, M))
+
+    # Iterate over the kernels
     count = 0
-    for row in matrix.T:
-        text = "".join(row)
-        count += text.count(SEARCH_KEY)
-        count += text[::-1].count(SEARCH_KEY)
+    for i in range(windows.shape[0]):
+        for j in range(windows.shape[1]):
+            kernel = windows[i, j]
+            c = count_x_mas_diagonally(kernel)
+            # 2 == both direction
+            if c == 2:
+                count += 1
     return count
-
-
-def count_xmas_diagonally(matrix: np.ndarray) -> int:
-    count = 0
-    mirrored_matrix = matrix[:, ::-1]
-
-    matrix_list = [matrix, mirrored_matrix]
-    for m in matrix_list:
-        for k in range(-m.shape[0], m.shape[0]):
-            diag = np.diag(m, k=k)
-
-            if diag.size < SEARCH_KEY_LEN:
-                continue
-
-            text = "".join(diag)
-            count += text.count(SEARCH_KEY)
-            count += text[::-1].count(SEARCH_KEY)
-    return count
-
-
-def count_xmas_occurrences(matrix: np.ndarray):
-    return (
-        count_xmas_horizontally(matrix)
-        + count_xmas_vertically(matrix)
-        + count_xmas_diagonally(matrix)
-    )
 
 
 def main_test() -> None:
     data = read_data(Path("data/input-test.txt"))
     matrix = matrix_from_txt(data)
 
-    result = count_xmas_horizontally(matrix)
-    expected = 5
-    assert result == expected, f"Result = {result}, expected = {expected}"
-
-    result = count_xmas_vertically(matrix)
-    expected = 3
-    assert result == expected, f"Result = {result}, expected = {expected}"
-
-    result = count_xmas_diagonally(matrix)
-    expected = 10
-    assert result == expected, f"Result = {result}, expected = {expected}"
-
-    result = count_xmas_occurrences(matrix)
-    expected = 18
+    result = count_x_mas_occurrences(matrix)
+    expected = 9
     assert result == expected, f"Result = {result}, expected = {expected}"
 
 
 def main() -> None:
     data = read_data(Path("data/input.txt"))
     matrix = matrix_from_txt(data)
-    print(count_xmas_occurrences(matrix))
+    print(count_x_mas_occurrences(matrix))
 
 
 if __name__ == "__main__":
