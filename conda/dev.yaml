@@ -1,0 +1,8 @@
+name: aoc
+channels:
+  - nodefaults
+  - conda-forge
+dependencies:
+  - compilers
+  - pandas
+  - numpy
