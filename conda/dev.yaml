@@ -6,3 +6,6 @@ dependencies:
   - compilers
   - pandas
   - numpy
+  - pip
+  - pip:
+    - ruff

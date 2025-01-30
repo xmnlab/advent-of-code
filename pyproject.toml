@@ -1,0 +1,119 @@
+[project]
+name = "aoc"
+version = "0.1.0"  # semantic-release
+description = "Solutions for the advent of code challenges"
+readme = "docs/index.md"
+authors = [
+  {name = "Ivan Ogasawara", email = "ivan.ogasawara@gmail.com"}
+]
+license = "BSD 3 Clause"
+requires-python = ">=3.9,<4"
+dependencies = [
+  "atpublic >= 4.0",
+  "typeguard >= 4",
+  "typing-extensions >=4 ; python_version < '3.9'",
+  "eval-type-backport >=0.2 ; python_version < '3.10'",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+exclude = [
+  ".git/*",
+  ".env*",
+]
+packages = [
+  {include = "astx", from="src"},
+]
+include = ["src/astx/py.typed"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.3.2"
+pytest-cov = ">=4.1.0"
+coverage = ">=7.2.7"
+pre-commit = ">=3.3.2"
+ruff = ">=0.1.5"
+mypy = ">=1.6.0"
+bandit = ">=1.7.5"
+vulture = ">=2.9.1"
+mccabe = ">=0.6.1"
+makim = "1.19.0"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+filterwarnings = [
+    "error::RuntimeWarning",
+    "error::typeguard.TypeHintWarning",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+targets = "./"
+
+[tool.vulture]
+exclude = ["tests"]
+ignore_decorators = ["@abc.abstractmethod"]
+ignore_names = []
+make_whitelist = true
+min_confidence = 80
+paths = ["./"]
+sort_by_size = true
+verbose = false
+
+[tool.ruff]
+line-length = 79
+force-exclude = true
+src = ["./"]
+exclude = [
+  'docs',
+]
+fix = true
+
+[tool.ruff.lint]
+ignore = [
+  "F811",
+  "PLR0911",  # Too many return statements
+  "PLR0912",  # Too many branches
+  "PLR0913",
+]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "D",   # pydocstyle
+  "YTT", # flake8-2020
+  "PL",  # PL
+  "RUF", # Ruff-specific rules
+  "I001", # isort
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.isort]
+# Use a single line between direct and from import
+lines-between-types = 1
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.8"
+check_untyped_defs = true
+strict = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+exclude = ["scripts/"]
+
+[[tool.mypy.overrides]]
+module = [
+  "yaml",
+]
+ignore_missing_imports = true

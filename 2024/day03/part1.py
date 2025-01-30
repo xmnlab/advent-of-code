@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import re
+
+from pathlib import Path
 
 regex = r"mul\([0-9]+,[0-9]+\)"
 
@@ -35,9 +35,7 @@ def process_terms(data) -> int:
     valid_terms = extract_valid_terms(data)
     results = []
     for line in valid_terms:
-        line_eval = [
-            eval(term) for term in line
-        ]
+        line_eval = [eval(term) for term in line]
         results.append(sum(line_eval))
     return sum(results)
 

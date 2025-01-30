@@ -21,6 +21,7 @@ def read_data(path: Path) -> tuple[int, int]:
 def calc_distance(data) -> int:
     return sum([abs(v[0] - v[1]) for v in data])
 
+
 def main_test() -> None:
     data = read_data(Path("input-test.txt"))
     assert calc_distance(data) == 11

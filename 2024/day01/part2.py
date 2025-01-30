@@ -23,6 +23,7 @@ def read_data(path: Path) -> tuple[list[int], list[int]]:
 def calc_similarity_score(left_ids, right_ids) -> int:
     return sum([l * right_ids.count(l) for l in left_ids])
 
+
 def main_test() -> None:
     left_ids, right_ids = read_data(Path("input-test.txt"))
     assert calc_similarity_score(left_ids, right_ids) == 31

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import re
+
+from pathlib import Path
 
 regex = r"mul\([0-9]+,[0-9]+\)|don't\(\)|do\(\)"
 

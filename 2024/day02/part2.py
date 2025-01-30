@@ -29,7 +29,7 @@ def check_status(v0: int, v1: int, factor: int) -> bool:
 
 def check_report_safety(row: list[int]) -> bool:
     total_levels = len(row)
-    total_levels_check = total_levels -1
+    total_levels_check = total_levels - 1
 
     factor = row[1] > row[0]
 
@@ -41,6 +41,7 @@ def check_report_safety(row: list[int]) -> bool:
         if not status:
             return False
     return True
+
 
 def check_report_safety_combination(row: list[int]) -> bool:
     initial_status = check_report_safety(row)

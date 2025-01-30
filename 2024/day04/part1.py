@@ -1,11 +1,8 @@
 from __future__ import annotations
 
-import re
-
 from pathlib import Path
 
 import numpy as np
-
 
 regex = r"mul\([0-9]+,[0-9]+\)"
 SEARCH_KEY = "XMAS"
@@ -21,9 +18,7 @@ def read_data(path: Path) -> tuple[int, int]:
 
 
 def matrix_from_txt(data: list[str]) -> np.ndarray:
-    matrix = np.array(
-        [list(row.strip()) for row in data if row]
-    )
+    matrix = np.array([list(row.strip()) for row in data if row])
     return matrix
 
 

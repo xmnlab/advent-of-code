@@ -17,7 +17,7 @@ def _check_report_safety(row: list[int]) -> bool:
 
     factor = row[1] > row[0]
 
-    for i in range(len(row) -1):
+    for i in range(len(row) - 1):
         v0 = row[i]
         next_i = i + 1
 
