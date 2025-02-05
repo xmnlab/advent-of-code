@@ -9,3 +9,4 @@ dependencies:
   - pip
   - pip:
     - ruff
+    - typing-extensions
