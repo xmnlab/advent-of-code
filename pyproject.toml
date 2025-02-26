@@ -7,7 +7,7 @@ authors = [
   {name = "Ivan Ogasawara", email = "ivan.ogasawara@gmail.com"}
 ]
 license = "BSD 3 Clause"
-requires-python = ">=3.9,<4"
+requires-python = ">=3.12,<3.13"
 dependencies = [
   "atpublic >= 4.0",
   "typeguard >= 4",
@@ -30,6 +30,7 @@ packages = [
   {include = "astx", from="src"},
 ]
 include = ["src/astx/py.typed"]
+package-mode = false
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.3.2"

@@ -3,10 +3,12 @@ channels:
   - nodefaults
   - conda-forge
 dependencies:
+  - python>=3.12,<3.13
+  - poetry>=2
   - compilers
   - pandas
   - numpy
   - pip
   - pip:
-    - ruff
-    - typing-extensions
+      - ruff
+      - typing-extensions
